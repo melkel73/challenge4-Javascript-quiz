@@ -55,20 +55,59 @@ function startBtnclick() {
   function loadQuiz() {
     // console.log(olEl)
     for (let i = 0; i < quiz.length; i++) {
-       quEl.textContent = quiz[0].question;
+       quEl.textContent = quiz[i].question;
+       
+       olEl.appendChild(li1).textContent= quiz[i].answers[0];
+       olEl.appendChild(li2).textContent = quiz[i].answers[1];
+       olEl.appendChild(li3).textContent = quiz[i].answers[2];
+       olEl.appendChild(li4).textContent = quiz[i].answers[3];
+       
+       var list = document.querySelectorAll('li');
+       console.log(list + "in here");
+       
+      //  list.forEach(() => {
+      //   addEventListener('click', checkAnswer);
+      // });
+
+      list.forEach(() => {
+        addEventListener('click',function() {
+          var selectedAnswer = event.target.textContent;
+
+          console.log(selectedAnswer);
+          if (selectedAnswer === quiz[i].correct) { console.log("correct!")}
+          else {
+            console.log("wrong!")
+          }
+        });
+      });
+
+    
+    //  li1.addEventListener("click", function() {
+    //     console.log("clicked1");
+    //   });
+    //   }
+    //   li2.addEventListener("click", function() {
+    //     console.log("clicked2");
+    //   });
+    //   }
+    //   li3.addEventListener("click", function() {
+    //     console.log("clicked3");
+    //   });
+    //   li4.addEventListener("click", function() {
+    //     console.log("clicked");
+    //   });
       
-       olEl.appendChild(li1).textContent= quiz[0].answers[0];
-       olEl.appendChild(li2).textContent = quiz[0].answers[1];
-       olEl.appendChild(li3).textContent = quiz[0].answers[2];
-       olEl.appendChild(li4).textContent = quiz[0].answers[3];
-       olEl.addEventListener("click",checkAnswer(EventTarget));
-      }
-    
-    
+    }}
 
-  };
-  function checkAnswer(EventTarget) {
-    console.log(this);
+  ;
+  
+  
+  // function checkAnswer(data) {
+  //   console.log('check answer' + data);
+  // }
+  function checkAnswer(event) {
+    var selectedAnswer = event.target.textContent;
+
+    console.log(selectedAnswer);
   }
-
   startBtn.addEventListener("click", startBtnclick);
