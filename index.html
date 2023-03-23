@@ -11,16 +11,18 @@
       <header>
         <h1>Welcome to the Javascript Quiz!</h1>
       </header>
-      <div class="container"></div>
-        <h2 id="q"></h2>
-        <ol id="answerlist">
-         <!-- <li id="answer1"></li>
-         <li id="answer2"></li>
-         <li id="answer3"></li>
-         <li id="answer4"></li> -->
-        </ol>
+      <h2 id="countdown"></h2>
+        <h2 id="q" data-state="hidden" data-askquestion=""></h2>
+        <!-- <div class="container"></div> -->
+        <!-- <ol id="answerlist"> -->
+         <li id="answer1" data-state="hidden"></li>
+         <li id="answer2" data-state="hidden"></li>
+         <li id="answer3" data-state="hidden"></li>
+         <li id="answer4" data-state="hidden"></li>
+        <!-- </ol> -->
+      
       <button id="start" data-state="visible">Start Quiz!</button>
-    </div>
+   
     <script src="assets/js/script.js"></script>
   </body>
 </html>
