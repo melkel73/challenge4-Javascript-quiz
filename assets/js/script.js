@@ -8,11 +8,12 @@ var olEl = document.querySelector("#answerlist");
 var quEl = document.querySelector("#q");
 var timerEl = document.getElementById('countdown');
 var startBtn = document.querySelector("#start");
-var li1 = document.getElementById("answer1");
-var li2 = document.getElementById("answer2");
-var li3 = document.getElementById("answer3");
-var li4 = document.getElementById("answer4");
+var li1 = document.createElement('li');
+var li2 = document.createElement('li');
+var li3 = document.createElement('li');
+var li4 = document.createElement('li');
 var selectedAnswer = "";
+var i = 0;
 var quiz = [
     {answers: ["Spanish","German","Object Oriented","English"],
      question: "Javascript is what kind of language?",
@@ -20,7 +21,7 @@ var quiz = [
     {answers: ["Boolean","String","Number","All of the above"],
      question: "Which is a valid datatype in Javascript?",
      correct: "All of the above"},
-    {answers: ["Spanish","German","Object Oriented","English"],
+    {answers: ["Hungarian","German","Object Oriented","English"],
      question: "Javascript is what kind of language?",
      correct: "Object Oriented"}
     /* and so on... */
@@ -42,56 +43,71 @@ function setTime() {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
       // Calls function to create and append image
-      sendMessage();
+    //  startBtnclick();
     }
 
   }, 1000);
 }
 
-function startBtnclick() {
-    
-    secondsLeft = 60;
-    startBtn.setAttribute("data-state", "hidden");
-    setTime();
-    loadQuiz();
-    }
 
-  ;
 
   function loadQuiz() {
-    
-     for (let i = 0; i < 1; i++) {
-    
+    var wait = false;
+    if (i < 10 ) {
+    wait = true;
     console.log(i);
        quEl.textContent = quiz[i].question;
-       li1.textContent = quiz[i].answers[0];
-       li2.textContent = quiz[i].answers[1];
-       li3.textContent = quiz[i].answers[2];
-       li4.textContent = quiz[i].answers[3];
+      //  li1.textContent = quiz[i].answers[0];
+      //  li2.textContent = quiz[i].answers[1];
+      //  li3.textContent = quiz[i].answers[2];
+      //  li4.textContent = quiz[i].answers[3];
 
-      //  olEl.appendChild(li1).textContent= quiz[i].answers[0];
-      //  olEl.appendChild(li2).textContent = quiz[i].answers[1];
-      //  olEl.appendChild(li3).textContent = quiz[i].answers[2];
-      //  olEl.appendChild(li4).textContent = quiz[i].answers[3];
+       olEl.appendChild(li1).textContent= quiz[i].answers[0];
+       olEl.appendChild(li2).textContent = quiz[i].answers[1];
+       olEl.appendChild(li3).textContent = quiz[i].answers[2];
+       olEl.appendChild(li4).textContent = quiz[i].answers[3];
        
        var list = document.querySelectorAll('li');
-       console.log(list + "in here");
+       console.log(list + "in here" + i);
        
 
       list.forEach((item) => {
         item.addEventListener('click',function() {
         selectedAnswer = event.target.textContent;
-        // });
+        checkAnswer(item,i);
+        console.log(i);
         
-          console.log(selectedAnswer);
-          if (selectedAnswer === quiz[i].correct) { console.log("Correct! Adding 5 seconds to the clock")
-           secondsLeft = secondsLeft + 5;}
-          else {
-            secondsLeft = secondsLeft - 5;
-            console.log("Wrong! The correct answer was " + quiz[i].correct + "You just lost 5 seconds!");
-          }
-        });
-      });
-   }
-  };
+         })
+         
+      })
+    
+    }
+    
+  }   
+   
+  
+  function checkAnswer(item,i){
+    console.log(selectedAnswer ); console.log(item); console.log(event.target.textContent);
+    if (selectedAnswer === quiz[i].correct) { console.log(selectedAnswer + " is Correct! Adding 5 seconds to the clock")
+     secondsLeft = secondsLeft + 5;
+    
+     console.log(i);
+    }
+    else {
+      secondsLeft = secondsLeft - 5;
+      console.log("Wrong! The correct answer was " + quiz[i].correct + "You just lost 5 seconds!");
+      i = i + 1;
+      
+    }
+  }
+
+  function startBtnclick() {
+    
+    secondsLeft = 60;
+    startBtn.setAttribute("data-state", "hidden");
+    setTime();
+    loadQuiz();
+  }
+
+  
 
