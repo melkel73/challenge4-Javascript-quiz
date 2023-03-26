@@ -3,6 +3,7 @@ var olEl = document.querySelector("#answerlist");
 var quEl = document.querySelector("#q");
 var timerEl = document.getElementById('countdown');
 var startBtn = document.querySelector("#start");
+var memBtn = document.querySelector("#clearmemory");
 var li1 = document.createElement('button');
 var li2 = document.createElement('button');
 var li3 = document.createElement('button');
@@ -60,18 +61,22 @@ if (localStorage.getItem("highscore") > 0) {
 }
 else {
 var hs = 0;
-var initials = "Anonymous";
+var initials = "No One";
 }
 
 // set the event listener for the start button and the initial text content for the h2 header. Pull in the high score and initials of highest score
+// if (localStorage.getItem("initials") == null) { memBtnclick();}
 startBtn.addEventListener("click", startBtnclick);
-if (localStorage.getItem("initials") == null) { initials = "Anonymous";}
-else { initials = localStorage.getItem("initials");}
+memBtn.addEventListener("click",memBtnclick);
 
-if (localStorage.getItem("highscore") == null) { hs = 0;}
-else {hs = localStorage.getItem("highscore");}
 
-timerEl.textContent = "The Timer will start when you click start! The score to beat is " + hs + " by " + initials + "!";
+// if (localStorage.getItem("initials") == null) { initials = "No One";}
+// else { initials = localStorage.getItem("initials");}
+
+// if (localStorage.getItem("highscore") == null) { hs = 0;}
+// else {hs = localStorage.getItem("highscore");}
+
+timerEl.textContent = "The Timer will start when you click start! The score to beat is " + localStorage.getItem("highscore") + " by " + localStorage.getItem("hsperson") + "!";
 
 function setTime() {
   // Sets interval in variable
@@ -122,7 +127,7 @@ function setTime() {
       //if they beat the high score let them store their initials
       if (localStorage.getItem("highscore") < secondsLeft) {
        initials = prompt("You got the high score! Enter your Initials to save the High Score!");
-      quEl.textContent = "Game Over! Your score is " + secondsLeft + ". You have the new High Score!";
+      quEl.textContent = "Game Over! Your score is " + secondsLeft + ". You have the new High Score " + initials + "!";
       localStorage.setItem("highscore", secondsLeft); localStorage.setItem("hsperson",initials);
       }
       //else if they did not get the high score pop an alert
@@ -130,8 +135,10 @@ function setTime() {
         alert("You did not make a high score. Try again!");
         quEl.textContent = "Game Over! Your score is " + secondsLeft + ".";
       }
-      startBtn.style.display = "block";
+      startBtn.style.display = "inline";
+    
       startBtn.textContent = "Try Again!";
+      memBtn.style.display = "inline";
       i = 0;
     }
   }   
@@ -139,7 +146,7 @@ function setTime() {
   function checkAnswer(EventTarget,item){
     selectedAnswer = EventTarget.textContent;
     console.log(selectedAnswer ); console.log(item); console.log(event.target.textContent);
-    if (selectedAnswer === quiz[i].correct) { console.log(selectedAnswer + " is Correct! Adding 5 seconds to the clock")
+    if (selectedAnswer === quiz[i].correct) { console.log(selectedAnswer)
     }
     else {
       secondsLeft = secondsLeft - 5;
@@ -152,10 +159,17 @@ function setTime() {
   function startBtnclick() {
     secondsLeft = 60;
     startBtn.style.display = "none";
+    memBtn.style.display = "none"
     setTime();
     loadQuiz();
   }
 
+  function memBtnclick() {
+    localStorage.clear;
+    localStorage.setItem("highscore",0);
+    localStorage.setItem("hsperson","No One");
+     location.reload();
+  }
   
 
 
